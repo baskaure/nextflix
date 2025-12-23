@@ -69,8 +69,8 @@ export default function BarometerClient({
       ? "film"
       : "aucun format";
 
-  // Calculer le niveau de soutien global (basé sur essentialShare)
-  const supportLevel = statistics.essentialShare;
+  // Calculer le niveau de soutien global (basé sur supportShare)
+  const supportLevel = statistics.supportShare;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-[#050508] to-black text-zinc-100">
@@ -117,16 +117,14 @@ export default function BarometerClient({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-zinc-800/70 bg-zinc-900/60 p-4 backdrop-blur-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
-                Attente essentielle
+                Soutien pondéré
               </p>
               <p className="mt-2 text-2xl font-semibold text-zinc-50">
-                {statistics.essentialShare}
+                {statistics.supportShare}
                 <span className="text-base text-zinc-500"> %</span>
               </p>
               <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                des signatures considèrent cette suite comme{" "}
-                <span className="font-medium text-zinc-100">indispensable</span> pour
-                l&apos;univers.
+                Volonté de suite (Q1) pondérée par l&apos;intensité (Q2).
               </p>
             </div>
             <div className="rounded-xl border border-zinc-800/70 bg-zinc-900/60 p-4 backdrop-blur-sm">
@@ -248,11 +246,10 @@ export default function BarometerClient({
                     {statistics.signatureCount.toLocaleString("fr-FR")} signature
                     {statistics.signatureCount > 1 ? "s" : ""}
                   </span>
-                  {statistics.essentialShare > 0 && (
+                  {statistics.supportShare > 0 && (
                     <>
                       {" "}
-                      • {statistics.essentialShare}% attente{" "}
-                      <span className="font-medium text-zinc-100">essentielle</span>
+                      • {statistics.supportShare}% soutien pondéré
                     </>
                   )}
                   {statistics.rejectRebootShare > 0 && (
