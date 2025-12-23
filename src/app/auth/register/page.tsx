@@ -135,9 +135,14 @@ export default function RegisterPage() {
             </p>
           </div>
 
+          <div className="space-y-3">
           <div className="rounded-xl border border-zinc-800/70 bg-black/50 p-3 text-[0.7rem] text-zinc-500">
             <p>
               <strong className="text-zinc-400">Note MVP :</strong> Les comptes sont stockés localement dans ton navigateur. En production, l'authentification sera sécurisée avec hash des mots de passe.
+              </p>
+            </div>
+            <p className="text-center text-xs text-amber-400/90">
+              Projet communautaire – non officiel
             </p>
           </div>
         </div>

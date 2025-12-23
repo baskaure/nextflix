@@ -153,6 +153,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
             universeId: d.universe_id,
             directionId: d.direction_id,
             verdict: d.verdict as "support" | "reject" | "wishlist" | "comment",
+            q4_poster_verdict: d.q4_poster_verdict as "oui" | "non" | "neutre" | undefined,
+            q5_fidelity: d.q5_fidelity as "oui" | "non" | undefined,
+            q6_preferred_format: d.q6_preferred_format as "film" | "serie" | "anime" | "miniserie" | "aucun" | undefined,
             submittedAt: d.submitted_at,
           })) || [],
         questionnaires:
@@ -289,6 +292,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         universe_id: data.universeId,
         direction_id: data.directionId,
         verdict: data.verdict,
+        q4_poster_verdict: data.q4_poster_verdict || null,
+        q5_fidelity: data.q5_fidelity || null,
+        q6_preferred_format: data.q6_preferred_format || null,
       });
 
       if (error) {

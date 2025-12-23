@@ -28,6 +28,9 @@ CREATE TABLE IF NOT EXISTS public.direction_verdicts (
   universe_id TEXT NOT NULL,
   direction_id TEXT NOT NULL,
   verdict TEXT NOT NULL CHECK (verdict IN ('support', 'reject', 'wishlist', 'comment')),
+  q4_poster_verdict TEXT CHECK (q4_poster_verdict IN ('oui', 'non', 'neutre')),
+  q5_fidelity TEXT CHECK (q5_fidelity IN ('oui', 'non')),
+  q6_preferred_format TEXT CHECK (q6_preferred_format IN ('film', 'serie', 'anime', 'miniserie', 'aucun')),
   submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -91,9 +94,10 @@ CREATE POLICY "Users can insert their own profile"
   WITH CHECK (auth.uid() = id);
 
 -- Policies pour signatures
-CREATE POLICY "Users can view their own signatures"
+-- Permettre la lecture publique pour les statistiques (comptage uniquement)
+CREATE POLICY "Public can view signature counts"
   ON public.signatures FOR SELECT
-  USING (auth.uid() = user_id);
+  USING (true);
 
 CREATE POLICY "Users can insert their own signatures"
   ON public.signatures FOR INSERT
@@ -104,18 +108,20 @@ CREATE POLICY "Users can update their own signatures"
   USING (auth.uid() = user_id);
 
 -- Policies pour direction_verdicts
-CREATE POLICY "Users can view their own direction verdicts"
+-- Permettre la lecture publique pour les statistiques
+CREATE POLICY "Public can view direction verdicts"
   ON public.direction_verdicts FOR SELECT
-  USING (auth.uid() = user_id);
+  USING (true);
 
 CREATE POLICY "Users can insert their own direction verdicts"
   ON public.direction_verdicts FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
 -- Policies pour questionnaires
-CREATE POLICY "Users can view their own questionnaires"
+-- Permettre la lecture publique pour les statistiques (agrégats uniquement)
+CREATE POLICY "Public can view questionnaires"
   ON public.questionnaires FOR SELECT
-  USING (auth.uid() = user_id);
+  USING (true);
 
 CREATE POLICY "Users can insert their own questionnaires"
   ON public.questionnaires FOR INSERT

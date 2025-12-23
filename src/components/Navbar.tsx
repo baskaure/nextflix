@@ -17,8 +17,33 @@ export function Navbar() {
             <Link href="/" className="text-white underline underline-offset-4">
               Accueil
             </Link>
-            <button className="text-zinc-300 hover:text-white">Univers</button>
-            <button className="text-zinc-300 hover:text-white">Baromètres</button>
+            <button
+              onClick={() => {
+                const section = document.getElementById("catalogue");
+                if (section) {
+                  section.scrollIntoView({ behavior: "smooth", block: "start" });
+                } else {
+                  window.location.href = "/#catalogue";
+                }
+              }}
+              className="text-zinc-300 hover:text-white transition"
+            >
+              Univers
+            </button>
+            <button
+              onClick={() => {
+                // Scroll vers la section catalogue (où sont les univers avec leurs baromètres)
+                const section = document.getElementById("catalogue");
+                if (section) {
+                  section.scrollIntoView({ behavior: "smooth", block: "start" });
+                } else {
+                  window.location.href = "/#catalogue";
+                }
+              }}
+              className="text-zinc-300 hover:text-white transition"
+            >
+              Baromètres
+            </button>
           </nav>
         </div>
         <div className="flex items-center gap-4">

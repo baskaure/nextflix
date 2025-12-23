@@ -22,6 +22,9 @@ export type DirectionVerdict = {
   universeId: string;
   directionId: string;
   verdict: "support" | "reject" | "wishlist" | "comment";
+  q4_poster_verdict?: "oui" | "non" | "neutre";
+  q5_fidelity?: "oui" | "non";
+  q6_preferred_format?: "film" | "serie" | "anime" | "miniserie" | "aucun";
   submittedAt: string;
 };
 
