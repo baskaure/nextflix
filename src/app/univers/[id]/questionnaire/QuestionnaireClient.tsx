@@ -3,12 +3,17 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getUniverseById, type Universe } from "@/lib/universes";
+import type { Universe } from "@/lib/universes";
 import { useUser } from "@/contexts/UserContext";
 import { Navbar } from "@/components/Navbar";
+import { usePoster } from "@/hooks/usePoster";
+import { posterByUniverseId, placeholderPoster } from "@/lib/posters";
 
 type QuestionnaireClientProps = {
-  universeId: string;
+  universe: Universe;
+  titleOverride?: string;
+  posterOverride?: string;
+  backdropOverride?: string;
 };
 
 type RedLine =
@@ -137,21 +142,26 @@ function QuestionSection({
   );
 }
 
-export default function QuestionnaireClient({ universeId }: QuestionnaireClientProps) {
+export default function QuestionnaireClient({
+  universe,
+  titleOverride,
+  posterOverride,
+  backdropOverride,
+}: QuestionnaireClientProps) {
   const router = useRouter();
   const { isAuthenticated, addQuestionnaire, hasAnsweredQuestionnaire } = useUser();
-  let universe: Universe | undefined = getUniverseById(universeId);
-
-  if (!universe) {
-    universe = {
-      id: universeId,
-      title: `Univers démo – ${universeId}`,
-      support: 60,
-      emotion: "Épique",
-      description:
-        "Univers de démonstration non encore configuré dans le baromètre. Ce questionnaire illustre le module avancé.",
-    };
-  }
+  const staticPoster = posterByUniverseId[universe.id];
+  const { posterUrl, backdropUrl } = usePoster(
+    posterOverride ? undefined : staticPoster ? undefined : universe.title
+  );
+  const finalBackdrop =
+    backdropOverride ||
+    backdropUrl ||
+    staticPoster ||
+    posterOverride ||
+    posterUrl ||
+    placeholderPoster;
+  const displayTitle = titleOverride || universe.title;
 
   const [state, setState] = React.useState<QuestionnaireState>({
     q7_redLines: [],
