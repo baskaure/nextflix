@@ -8,6 +8,9 @@ type BarometerClientProps = {
   universe: Universe;
   statistics: UniverseStatistics;
   isFallback?: boolean;
+  titleOverride?: string;
+  posterOverride?: string;
+  backdropOverride?: string;
 };
 
 function Gauge({ value }: { value: number }) {
@@ -52,6 +55,9 @@ export default function BarometerClient({
   universe,
   statistics,
   isFallback,
+  titleOverride,
+  posterOverride,
+  backdropOverride,
 }: BarometerClientProps) {
   // Calculer le format préféré (le plus grand pourcentage)
   const formatEntries = Object.entries(statistics.preferredFormat);
@@ -71,6 +77,8 @@ export default function BarometerClient({
 
   // Calculer le niveau de soutien global (basé sur supportShare)
   const supportLevel = statistics.supportShare;
+  const displayTitle = titleOverride || universe.title;
+  const backgroundImage = backdropOverride || posterOverride || undefined;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-[#050508] to-black text-zinc-100">
@@ -101,12 +109,23 @@ export default function BarometerClient({
 
       <main className="mx-auto grid w-full max-w-7xl gap-6 px-5 pt-24 pb-16 sm:px-10 md:grid-cols-[3fr,2fr]">
         {/* Colonne gauche : jauge + résumé chiffré */}
-        <section className="space-y-6 rounded-2xl border border-zinc-900/70 bg-gradient-to-br from-zinc-950/90 via-zinc-950/80 to-black p-6 shadow-xl shadow-black/60 sm:p-8">
+        <section
+          className="space-y-6 rounded-2xl border border-zinc-900/70 bg-gradient-to-br from-zinc-950/90 via-zinc-950/80 to-black p-6 shadow-xl shadow-black/60 sm:p-8"
+          style={
+            backgroundImage
+              ? {
+                  backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.7) 70%), url(${backgroundImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : undefined
+          }
+        >
           <div className="space-y-2">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-400">
-              Pression narrative – {universe.title}
+              Pression narrative – {displayTitle}
             </p>
-            <p className="text-sm leading-relaxed text-zinc-400">
+            <p className="text-sm leading-relaxed text-zinc-200">
               Vue synthétique pour comprendre en quelques secondes l&apos;intensité de
               l&apos;attente, les rejets clairs et la direction privilégiée par les fans.
             </p>
