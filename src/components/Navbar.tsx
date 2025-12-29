@@ -44,6 +44,12 @@ export function Navbar() {
             >
               Baromètres
             </button>
+            <Link href="/suites" className="text-zinc-300 hover:text-white transition">
+              Suites
+            </Link>
+            <Link href="/projets" className="text-zinc-300 hover:text-white transition">
+              Projets
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-4">
