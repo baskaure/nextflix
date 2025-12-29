@@ -14,6 +14,7 @@ type DirectionsClientProps = {
   posterOverride?: string;
   backdropOverride?: string;
   titleOverride?: string;
+  directionsOverride?: DirectionCard[];
 };
 
 type DirectionVerdict = "support" | "reject" | "wishlist" | "comment";
